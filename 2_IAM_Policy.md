@@ -49,3 +49,5 @@
   ]
 }
 ```
+## Assume Role trong AWS
+- Assume Role trong AWS cho phép một thực thể (User, Role hoặc Service) tạm thời nhận quyền từ một IAM Role khác mà không cần phải có quyền trực tiếp. Điều này giúp quản lý quyền truy cập linh hoạt và an toàn hơn, đặc biệt trong môi trường đa tài khoản hoặc giữa các dịch vụ AWS.

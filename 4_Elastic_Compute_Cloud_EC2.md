@@ -53,3 +53,30 @@
 - Chỉ chạy một lần trong lần boot đầu tiên (mặc định).
 - Chạy với quyền root trên hệ điều hành Linux hoặc Windows.
 - Có thể viết bằng Bash, PowerShell, hoặc Cloud-Init.
+## EC2 Metadata 
+**là thông tin về instance mà bạn có thể truy xuất từ bên trong chính instance đó. Nó cung cấp dữ liệu như Instance ID, Public IP, Security Groups, IAM Role, v.v.**
+- Khi khởi tạo (Launching) một EC2 instance, mặc định Metadata Version là V2 Only (Token Required). Vì vậy, cần có TOKEN trong lệnh nếu muốn lấy thông tin METADATA trong EC2:
+```
+TOKEN=`curl -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"` && curl -H "X-aws-ec2-metadata-token: $TOKEN" -v http://169.254.169.254/latest/meta-data/
+```
+- Tuy nhiên, có thể chọn Metadata Version là V1 and V2 (token optional) khi khởi tạo (Launching) một EC2 instance. Điều này cho phép bạn không cần TOKEN trong lệnh nếu muốn lấy thông tin METADATA trong EC2:
+
+`curl http://169.254.169.254/latest/meta-data/`
+## Placement Groups
+**Cluster Placement Group**
+- Dùng khi cần độ trễ thấp và băng thông cao giữa các EC2 instances.
+- Các instances được đặt rất gần nhau trong cùng một Availability Zone (AZ).
+- Phù hợp với High-Performance Computing (HPC), Big Data, AI, Machine Learning.
+- Nhược điểm: Nếu AZ bị lỗi, toàn bộ instances có thể bị ảnh hưởng.
+
+**Spread Placement Group**
+- Dùng khi cần phân tán instances để tăng tính sẵn sàng.
+- Các instances được trải rộng trên nhiều phần cứng vật lý khác nhau.
+- Giới hạn: Tối đa 7 instances trên mỗi AZ.
+- Phù hợp với ứng dụng quan trọng, yêu cầu high availability (VD: database, critical services).
+
+**Partition Placement Group**
+- Dùng khi muốn bảo vệ ứng dụng khỏi lỗi phần cứng.
+- Instances được chia thành nhiều Partition, mỗi Partition đặt trên một phần cứng riêng.
+- Partition có thể nằm trong một hoặc nhiều AZ.
+- Tốt cho Hadoop, Cassandra, HDFS, nơi dữ liệu cần được tách biệt để tránh lỗi toàn bộ hệ thống.

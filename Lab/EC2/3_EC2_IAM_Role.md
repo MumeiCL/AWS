@@ -28,7 +28,7 @@ Chỉ cấp quyền cho EC2 instance truy cập vào 2 bucket của bộ phận 
             "s3:List*"
          ],
          "Resource": [
-           "arn:aws:s3:::<S3_BUCKET_NAME>/*",
+           "arn:aws:s3:::<S3_BUCKET_NAME>",
            "arn:aws:s3:::<S3_BUCKET_NAME>"
          ]
         }
@@ -45,3 +45,4 @@ Click Actions > Security > Modify IAM role.
 ![image](https://github.com/user-attachments/assets/aa0a0417-2724-4b16-8661-eaeb5584b569)
 
 **Kiểm tra**
+![image](https://github.com/user-attachments/assets/3379c543-5072-4dbc-a9ec-623df623de73)

@@ -32,3 +32,24 @@
   - Trường hợp khẩn cấp cần phải dùng một lượng lớn tài nguyên máy tính để tính toán.
   - Các ứng dụng có khả năng linh hoạt trong thời gian bắt đầu chạy và kết thúc
 - Dedicated Instances: Một máy chủ EC2 vật lý riêng, chi phí cao nhất.
+## Security Groups
+**Security Groups (SG) là tường lửa ảo điều khiển luồng traffic đến và đi từ EC2 instances. Nó giúp bảo vệ tài nguyên bằng cách chỉ cho phép các kết nối cụ thể.**
+
+**Đặc điểm chính của Security Groups**
+- Kiểm soát Inbound & Outbound Rules
+  - Inbound Rules: Xác định traffic nào được phép đi vào instance.
+  - Outbound Rules: Xác định traffic nào được phép đi ra từ instance.
+- Hoạt động theo mô hình "Allow"
+  - Mặc định, tất cả traffic bị từ chối.
+  - Chỉ những traffic được cấu hình Allow trong rules mới được phép.
+- Gắn với instance, không phải subnet
+  - Mỗi EC2 instance có thể gán nhiều Security Groups.
+  - Một Security Group có thể dùng chung cho nhiều instance.
+- Không hỗ trợ "Deny Rules"
+  - AWS Security Groups chỉ có thể cho phép (Allow), không thể chặn (Deny) trực tiếp như Network ACLs.
+## Bootstrap Scripts
+**Bootstrap Scripts là tập lệnh chạy tự động khi một EC2 instance khởi động lần đầu tiên. Nó được sử dụng để cấu hình hệ thống, cài đặt phần mềm hoặc thực hiện các tác vụ cần thiết trước khi instance sẵn sàng.**
+- Script được cung cấp trong "User Data" khi tạo instance.
+- Chỉ chạy một lần trong lần boot đầu tiên (mặc định).
+- Chạy với quyền root trên hệ điều hành Linux hoặc Windows.
+- Có thể viết bằng Bash, PowerShell, hoặc Cloud-Init.
